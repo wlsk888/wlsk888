@@ -20,13 +20,13 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/Lienol/openwrt
+  REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: Mt7620.config
+  CONFIG_FILE: MT7620.config
   DIY_SH: diy.sh
   FREE_UP_DISK: false
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
@@ -59,7 +59,7 @@ jobs:
         sudo -E apt-get -qq clean
     - name: Clone source code
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-                
+
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
@@ -96,7 +96,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: openwrt_directory
+        name: OpenWrt_directory
         path: openwrt/bin
 
     - name: Organize files
@@ -111,5 +111,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: openwrt_firmware
+        name: OpenWrt_firmware
         path: ${{ env.FIRMWARE }}
