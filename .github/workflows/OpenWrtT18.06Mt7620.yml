@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Build openwrt19.07
+name: testopenwrt19.07
 
 on:
   release:
